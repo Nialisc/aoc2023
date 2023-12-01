@@ -1,21 +1,7 @@
-# Aoc
+# Advent of code 2023
 
-**TODO: Add description**
+## Tests
+This repo is a simple Elixir project using TDD to solve each problem with custom case behavior.
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `aoc2023` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:aoc2023, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/aoc2023>.
-
+## Running a solution
+If you want to run the solution for a given day, you can use `mix exec <day> <part>`

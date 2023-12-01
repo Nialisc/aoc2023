@@ -1,18 +1,17 @@
 defmodule Aoc do
-  @moduledoc """
-  Documentation for `Aoc`.
-  """
+  @callback part1(list(String.t())) :: any
+  @callback part2(list(String.t())) :: any
 
-  @doc """
-  Hello world.
+  defp read_file(path) do
+    File.read!(path)
+    |> String.split("\n")
+  end
 
-  ## Examples
+  def run(day, part) do
+    module = String.to_existing_atom("Elixir.Aoc.Day#{day}")
+    function = String.to_existing_atom("part#{part}")
+    inputs = read_file("inputs/day#{day}_part#{part}.txt")
 
-      iex> Aoc.hello()
-      :world
-
-  """
-  def hello do
-    :world
+    apply(module, function, [inputs])
   end
 end
