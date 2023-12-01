@@ -1,40 +1,44 @@
 defmodule Aoc.Day1 do
   @behaviour Aoc
 
+  @rxp ~r/(1|2|3|4|5|6|7|8|9)/
+  @rxp_forward ~r/(1|2|3|4|5|6|7|8|9|one|two|three|four|five|six|seven|eight|nine)/
+  @rxp_backward ~r/(1|2|3|4|5|6|7|8|9|eno|owt|eerht|ruof|evif|xis|neves|thgie|enin)/
+
   def part1(inputs) do
     inputs
-    |> Enum.map(&parse_numbers/1)
+    |> Enum.map(fn str -> [get(str, @rxp), get(String.reverse(str), @rxp)] end)
+    |> Enum.map(&format/1)
     |> Enum.reduce(0, fn el, acc -> acc + el end)
   end
 
   def part2(inputs) do
     inputs
-    |> Enum.map(&parse_text_numbers/1)
-    |> part1()
+    |> Enum.map(fn str -> [get(str, @rxp_forward), get(String.reverse(str), @rxp_backward)] end)
+    |> Enum.map(&format/1)
+    |> Enum.reduce(0, fn el, acc -> acc + el end)
   end
 
-  defp parse_numbers(str) do
-    numbers =
-      Regex.scan(~r/([0-9])/, str, capture: :first)
-      |> Enum.map(&List.first/1)
+  defp get(str, rxp), do: Regex.run(rxp, str, capture: :first)
 
-    [first, last] = [List.first(numbers), List.last(numbers)]
-    String.to_integer("#{first}#{last}")
+  defp format([[first], [last]]) do
+    [map(first), map(last)]
+    |> Enum.join()
+    |> String.to_integer()
   end
 
-  defp parse_text_numbers(str) do
-    Regex.replace(~r/(one|two|three|four|five|six|seven|eight|nine)/, str, fn _, x ->
-      case x do
-        "one" -> "1"
-        "two" -> "2"
-        "three" -> "3"
-        "four" -> "4"
-        "five" -> "5"
-        "six" -> "6"
-        "seven" -> "7"
-        "eight" -> "8"
-        "nine" -> "9"
-      end
-    end)
+  defp map(str) do
+    case str do
+      v when v in ["one", "eno"] -> "1"
+      v when v in ["two", "owt"] -> "2"
+      v when v in ["three", "eerht"] -> "3"
+      v when v in ["four", "ruof"] -> "4"
+      v when v in ["five", "evif"] -> "5"
+      v when v in ["six", "xis"] -> "6"
+      v when v in ["seven", "neves"] -> "7"
+      v when v in ["eight", "thgie"] -> "8"
+      v when v in ["nine", "enin"] -> "9"
+      other -> other
+    end
   end
 end

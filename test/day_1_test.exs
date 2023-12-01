@@ -1,5 +1,5 @@
 defmodule Aoc.Day1Test do
-  use Aoc.Case
+  use Aoc.Case, async: true
 
   @tag filename: "day1_part1.txt"
   test "part1/1 should return 142 with the given inputs", %{inputs: inputs} do
