@@ -1,9 +1,9 @@
 defmodule Aoc.Day1 do
   @behaviour Aoc
 
-  @rxp ~r/(1|2|3|4|5|6|7|8|9)/
-  @rxp_forward ~r/(1|2|3|4|5|6|7|8|9|one|two|three|four|five|six|seven|eight|nine)/
-  @rxp_backward ~r/(1|2|3|4|5|6|7|8|9|eno|owt|eerht|ruof|evif|xis|neves|thgie|enin)/
+  @rxp ~r/([0-9])/
+  @rxp_forward ~r/([0-9]|one|two|three|four|five|six|seven|eight|nine)/
+  @rxp_backward ~r/([0-9]|eno|owt|eerht|ruof|evif|xis|neves|thgie|enin)/
 
   def part1(inputs) do
     inputs
