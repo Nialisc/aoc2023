@@ -3,23 +3,24 @@ defmodule Aoc.Day2 do
 
   def part1(inputs) do
     inputs
-    |> Stream.map(&format_game/1)
-    |> Stream.filter(&is_possible?(&1, %{red: 12, green: 13, blue: 14}))
+    |> Stream.map(&format/1)
+    |> Stream.filter(&is_possible?(&1, %{"red" => 12, "green" => 13, "blue" => 14}))
     |> Stream.map(fn {id, _} -> id end)
     |> Enum.sum()
   end
 
-  def part2(_inputs) do
-    dbg("todo")
+  def part2(inputs) do
+    inputs
+    |> Stream.map(&format/1)
+    |> Stream.map(&get_power/1)
+    |> Enum.sum()
   end
 
-  # Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
-  defp format_game(game) do
+  defp format(game) do
     [id, scores] =
       game
       |> String.replace(";", ",")
       |> String.replace("Game ", "")
-      |> String.replace("\n", "")
       |> String.split(":", trim: true)
 
     scores =
@@ -30,13 +31,17 @@ defmodule Aoc.Day2 do
     {String.to_integer(id), scores}
   end
 
-  defp is_possible?({_, scores}, %{red: red, green: green, blue: blue}) do
-    Enum.all?(scores, fn {color, number} ->
-      case color do
-        "blue" -> number <= blue
-        "green" -> number <= green
-        "red" -> number <= red
-      end
+  defp is_possible?({_, scores}, max) do
+    Enum.all?(scores, fn {color, number} -> number <= max[color] end)
+  end
+
+  defp get_power({_, scores}) do
+    scores
+    |> Enum.reduce(%{"red" => 0, "green" => 0, "blue" => 0}, fn {color, number}, max ->
+      val = if max[color] >= number, do: max[color], else: number
+      %{max | color => val}
     end)
+    |> Map.values()
+    |> Enum.product()
   end
 end

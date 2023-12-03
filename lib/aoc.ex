@@ -4,6 +4,7 @@ defmodule Aoc do
 
   defp read_file(path) do
     File.stream!(path)
+    |> Stream.map(&String.replace(&1, "\n", ""))
   end
 
   def run(day, part) do
