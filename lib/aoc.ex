@@ -3,8 +3,7 @@ defmodule Aoc do
   @callback part2(list(String.t())) :: any
 
   defp read_file(path) do
-    File.read!(path)
-    |> String.split("\n")
+    File.stream!(path)
   end
 
   def run(day, part) do

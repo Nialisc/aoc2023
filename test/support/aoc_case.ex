@@ -4,9 +4,6 @@ defmodule Aoc.Case do
   @fixtures_path "test/support/fixtures"
 
   setup tags do
-    {:ok,
-     inputs:
-       File.read!("#{@fixtures_path}/#{tags[:filename]}")
-       |> String.split("\n")}
+    {:ok, inputs: File.stream!("#{@fixtures_path}/#{tags[:filename]}")}
   end
 end
