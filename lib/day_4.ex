@@ -41,9 +41,9 @@ defmodule Aoc.Day4 do
           acc
 
         w ->
-          adds = (index + 1)..(index + w)
+          cards = (index + 1)..(index + w)
 
-          Enum.reduce(adds, acc, fn next_i, acc ->
+          Enum.reduce(cards, acc, fn next_i, acc ->
             Map.update(acc, next_i, n, &(&1 + n))
           end)
       end
@@ -58,7 +58,5 @@ defmodule Aoc.Day4 do
   end
 
   defp attribute_points(0), do: 0
-  defp attribute_points(n), do: attribute_points(n - 1, 1)
-  defp attribute_points(0, acc), do: acc
-  defp attribute_points(n, acc), do: attribute_points(n - 1, acc * 2)
+  defp attribute_points(n), do: Integer.pow(2, n - 1)
 end
